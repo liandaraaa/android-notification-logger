@@ -37,8 +37,8 @@ class NotificationService : NotificationListenerService() {
 
     override fun onNotificationPosted(sbn: StatusBarNotification?) {
        try {
-           val notification = Gson().toJson(sbn?.notification)
-           val extras = Gson().toJson(getNotificationExtras(sbn))
+           notification = Gson().toJson(sbn?.notification)
+           extras = Gson().toJson(getNotificationExtras(sbn))
            Log.d("ACTIVE_NOTIFICATION","On Posted ${notification}")
            Log.d("ACTIVE_NOTIFICATION","On Posted Extras ${extras}")
        }catch (e:Exception){
@@ -48,8 +48,8 @@ class NotificationService : NotificationListenerService() {
 
     override fun onNotificationRemoved(sbn: StatusBarNotification?) {
         try {
-            val notification = Gson().toJson(sbn?.notification)
-            val extras = Gson().toJson(getNotificationExtras(sbn))
+            notification = Gson().toJson(sbn?.notification)
+            extras = Gson().toJson(getNotificationExtras(sbn))
             Log.d("ACTIVE_NOTIFICATION","On Removed ${notification}")
             Log.d("ACTIVE_NOTIFICATION","On Removed Extras ${extras}")
         }catch (e:Exception){
@@ -58,21 +58,21 @@ class NotificationService : NotificationListenerService() {
     }
 
     private fun getNotificationExtras(sbn: StatusBarNotification?):NotificationObject{
-        val extras = sbn?.notification?.extras
+        extras = sbn?.notification?.extras
         var notification = NotificationObject()
-        val appName = context?.let { getAppNameFromPackage(it,sbn?.packageName.nullToEmptyString()) }
+        appName = context?.let { getAppNameFromPackage(it,sbn?.packageName.nullToEmptyString()) }
         notification.appName = appName.orEmpty()
         if(extras !== null){
-            val title = extras.getCharSequence(NotificationCompat.EXTRA_TITLE).nullToEmptyString()
-            val titleBig = extras.getCharSequence(NotificationCompat.EXTRA_TITLE_BIG).nullToEmptyString()
-            val text = extras.getCharSequence(NotificationCompat.EXTRA_TEXT).nullToEmptyString()
-            val textBig = extras.getCharSequence(NotificationCompat.EXTRA_BIG_TEXT).nullToEmptyString()
-            val infoText = extras.getCharSequence(NotificationCompat.EXTRA_INFO_TEXT).nullToEmptyString()
-            val subText = extras.getCharSequence(NotificationCompat.EXTRA_SUB_TEXT).nullToEmptyString()
-            val summary = extras.getCharSequence(NotificationCompat.EXTRA_SUMMARY_TEXT).nullToEmptyString()
-            val largeIcon = extras.getCharSequence(NotificationCompat.EXTRA_LARGE_ICON).nullToEmptyString()
-            val largeIconBig = extras.getCharSequence(NotificationCompat.EXTRA_LARGE_ICON_BIG).nullToEmptyString()
-            val smallIcon = extras.getCharSequence(NotificationCompat.EXTRA_SMALL_ICON).nullToEmptyString()
+            title = extras.getCharSequence(NotificationCompat.EXTRA_TITLE).nullToEmptyString()
+            titleBig = extras.getCharSequence(NotificationCompat.EXTRA_TITLE_BIG).nullToEmptyString()
+            text = extras.getCharSequence(NotificationCompat.EXTRA_TEXT).nullToEmptyString()
+            textBig = extras.getCharSequence(NotificationCompat.EXTRA_BIG_TEXT).nullToEmptyString()
+            infoText = extras.getCharSequence(NotificationCompat.EXTRA_INFO_TEXT).nullToEmptyString()
+            subText = extras.getCharSequence(NotificationCompat.EXTRA_SUB_TEXT).nullToEmptyString()
+            summary = extras.getCharSequence(NotificationCompat.EXTRA_SUMMARY_TEXT).nullToEmptyString()
+            largeIcon = extras.getCharSequence(NotificationCompat.EXTRA_LARGE_ICON).nullToEmptyString()
+            largeIconBig = extras.getCharSequence(NotificationCompat.EXTRA_LARGE_ICON_BIG).nullToEmptyString()
+            smallIcon = extras.getCharSequence(NotificationCompat.EXTRA_SMALL_ICON).nullToEmptyString()
            notification = NotificationObject(appName.orEmpty(),title,titleBig,text,textBig,infoText,subText,summary,largeIcon,largeIconBig,smallIcon)
         return notification
         }

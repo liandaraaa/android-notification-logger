@@ -41,10 +41,10 @@ class MainActivity : ComponentActivity() {
 }
 
 private fun getAllNotification(context:Context){
-    val manager:NotificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-    val activeNotifications = manager.activeNotifications
-    val gson = Gson()
-    val notificationString = gson.toJson(activeNotifications.map { it.notification })
+    manager:NotificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+    activeNotifications = manager.activeNotifications
+    gson = Gson()
+    notificationString = gson.toJson(activeNotifications.map { it.notification })
     Log.d("ACTIVE_NOTIFICATIONS", notificationString)
 }
 
@@ -57,7 +57,7 @@ private fun hasNotificationAccess(context: Context): Boolean {
 
 private fun openPermissions(context: Context) {
     try {
-        val settingsIntent =
+        settingsIntent =
             Intent("android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS")
         context.startActivity(settingsIntent)
     } catch (e: ActivityNotFoundException) {
