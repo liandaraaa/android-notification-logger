@@ -6,20 +6,20 @@ import android.content.pm.PackageManager
 
 data class NotificationObject(
     var appName:String = "",
-    title:String = "",
-    titleBig:String = "",
-    text:String = "",
-    textBig:String = "",
-    infoText:String = "",
-    subText:String = "",
-    summary:String = "",
-    largeIcon:String = "",
-    largeIconBig:String = "",
-    smallIcon:String  = ""
+    var title:String = "",
+    var titleBig:String = "",
+    var text:String = "",
+    var textBig:String = "",
+    var infoText:String = "",
+    var subText:String = "",
+    var summary:String = "",
+    var largeIcon:String = "",
+    var largeIconBig:String = "",
+    var smallIcon:String  = ""
 )
 
 fun getAppNameFromPackage(context:Context,packageName:String):String {
-    pm:PackageManager = context.applicationContext.packageManager;
+    val pm:PackageManager = context.applicationContext.packageManager;
     var ai:ApplicationInfo? = null
     ai = try {
         pm.getApplicationInfo(packageName, 0);
