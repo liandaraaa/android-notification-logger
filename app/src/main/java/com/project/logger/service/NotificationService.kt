@@ -45,9 +45,9 @@ class NotificationService : NotificationListenerService() {
 
     override fun onNotificationPosted(sbn: StatusBarNotification?) {
        try {
-           val notification = Gson().toJson(sbn?.notification)
+           val extras = Gson().toJson(getNotificationExtras(sbn))
            scope.launch {
-               EventBus.publish(notification)
+               EventBus.publish(extras)
            }
        }catch (e:Exception){
            Log.d("ACTIVE_NOTIFICATION","Error On Posted",e)

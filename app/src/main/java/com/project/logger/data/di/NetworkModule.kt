@@ -7,10 +7,12 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
+
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -20,6 +22,19 @@ class NetworkModule {
     fun provideHttpClient(): OkHttpClient {
         return OkHttpClient
             .Builder()
+            .addNetworkInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
+            .addInterceptor{chain ->
+                chain.proceed(
+                    //create request
+                    chain.request()
+                        .newBuilder()
+                        //add headers to the request builder
+                        .also {
+                            it.addHeader("Content-Type", "application/json")
+                        }
+                        .build()
+                )
+            }
             .readTimeout(60, TimeUnit.SECONDS)
             .connectTimeout(60, TimeUnit.SECONDS)
             .build()
@@ -36,23 +51,9 @@ class NetworkModule {
         okHttpClient: OkHttpClient,
         gsonConverterFactory: GsonConverterFactory
     ): Retrofit {
-        val okhttp = OkHttpClient.Builder()
-            .addInterceptor{chain ->
-                chain.proceed(
-                    //create request
-                    chain.request()
-                        .newBuilder()
-                        //add headers to the request builder
-                        .also {
-                            it.addHeader("Content-Type", "application/json")
-                        }
-                        .build()
-                )
-            }.build()
-
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
-            .client(okhttp)
+            .client(okHttpClient)
             .addConverterFactory(gsonConverterFactory)
             .build()
     }

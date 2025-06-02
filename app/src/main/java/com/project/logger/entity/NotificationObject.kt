@@ -30,8 +30,18 @@ fun getAppNameFromPackage(context:Context,packageName:String):String {
     return if(ai != null) pm.getApplicationLabel(ai).toString() else packageName
 }
 
-fun NotificationObject.toApiRequest():ApiRequest{
-    return ApiRequest(
-        appName, title, titleBig, text, textBig, infoText, subText, summary, largeIcon, largeIconBig, smallIcon
-    )
-}
+//fun NotificationObject.toApiRequest():ApiRequest{
+//    return ApiRequest(
+//        appName = appName,
+//        title = title,
+//        titleBig = titleBig,
+//        text = "In text nya dummy",
+//        textBig = "In text nya dummy",
+//        infoText = "In text nya dummy",
+//        subText = "In text nya dummy",
+//        summary = "In text nya dummy",
+//        largeIcon = largeIcon,
+//        largeIconBig = largeIconBig,
+//        smallIcon = smallIcon
+//    )
+//}

@@ -20,7 +20,6 @@ class MainViewModel @Inject constructor(private val repository: Repository, appl
 
     fun submitLogRecord(request: ApiRequest) = viewModelScope.launch {
         repository.submitLogRecord(context, request).collect { values ->
-            Log.d("ACTIVE_NOTIFICATION","On viewmodel.. $values")
             _response.value = values
         }
     }

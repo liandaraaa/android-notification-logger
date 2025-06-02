@@ -25,7 +25,6 @@ import com.project.logger.data.ApiRequest
 import com.project.logger.data.ApiResponse
 import com.project.logger.data.ApiResultHandler
 import com.project.logger.entity.NotificationObject
-import com.project.logger.entity.toApiRequest
 import com.project.logger.event.EventBus
 import com.project.logger.ui.theme.LoggerTheme
 import com.project.logger.viewmodels.MainViewModel
@@ -78,9 +77,11 @@ class MainActivity : ComponentActivity() {
     private fun bindSubscribe() {
         lifecycleScope.launch {
             EventBus.events.collectLatest { message ->
+                Log.d("ACTIVE_NOTIFICATION", "On events.... $message")
                 val gson = Gson()
                 val notification = gson.fromJson(message, NotificationObject::class.java)
-                mainViewModel.submitLogRecord(notification.toApiRequest())
+                Log.d("ACTIVE_NOTIFICATION", "On receiving.... $notification")
+                mainViewModel.submitLogRecord(ApiRequest(message))
             }
         }
     }
@@ -93,7 +94,7 @@ class MainActivity : ComponentActivity() {
                         Log.d("ACTIVE_NOTIFICATION","On loading..")
                     },
                     onSuccess = { data ->
-                        Log.d("ACTIVE_NOTIFICATION","On success.. ${data?.data}")
+                        Log.d("ACTIVE_NOTIFICATION","On success.. ${data}")
                     },
                     onFailure = {
                         Log.d("ACTIVE_NOTIFICATION","On failure..")
