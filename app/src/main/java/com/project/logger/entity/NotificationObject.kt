@@ -3,6 +3,7 @@ package com.project.logger.entity
 import android.content.Context
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
+import com.project.logger.data.ApiRequest
 
 data class NotificationObject(
     var appName:String = "",
@@ -27,4 +28,10 @@ fun getAppNameFromPackage(context:Context,packageName:String):String {
         null
     }
     return if(ai != null) pm.getApplicationLabel(ai).toString() else packageName
+}
+
+fun NotificationObject.toApiRequest():ApiRequest{
+    return ApiRequest(
+        appName, title, titleBig, text, textBig, infoText, subText, summary, largeIcon, largeIconBig, smallIcon
+    )
 }

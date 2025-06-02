@@ -1,4 +1,4 @@
-package com.project.logger
+package com.project.logger.viewmodels
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel

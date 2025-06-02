@@ -36,9 +36,23 @@ class NetworkModule {
         okHttpClient: OkHttpClient,
         gsonConverterFactory: GsonConverterFactory
     ): Retrofit {
+        val okhttp = OkHttpClient.Builder()
+            .addInterceptor{chain ->
+                chain.proceed(
+                    //create request
+                    chain.request()
+                        .newBuilder()
+                        //add headers to the request builder
+                        .also {
+                            it.addHeader("Content-Type", "application/json")
+                        }
+                        .build()
+                )
+            }.build()
+
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
-            .client(okHttpClient)
+            .client(okhttp)
             .addConverterFactory(gsonConverterFactory)
             .build()
     }

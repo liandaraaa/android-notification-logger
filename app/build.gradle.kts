@@ -21,16 +21,12 @@ android {
     }
 
     buildTypes {
-        debug {
-            buildConfigField("String","BASE_URL","")
-        }
         release {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            buildConfigField("String","BASE_URL","https://vihara-sidhartta.depinsutohap.space/api/")
         }
     }
     compileOptions {
@@ -46,6 +42,7 @@ android {
 }
 
 dependencies {
+    implementation(libs.eventbus)
     implementation(libs.hilt)
     implementation(libs.kotlin.reflect)
     ksp(libs.hilt.compiler)

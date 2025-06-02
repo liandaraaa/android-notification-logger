@@ -5,7 +5,7 @@ data class ApiResponse(
     val collectionId: String,
     val collectionName: String,
     val created: String,
-    val `data`: String,
+    val data: String,
     val id: String,
     val updated: String
 )
